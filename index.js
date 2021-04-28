@@ -68,6 +68,36 @@ function createEngineer() {
     })
 };
 
+function createIntern() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'internName',
+            message: "What is the intern's name?"
+        },
+        {
+            type: 'input',
+            name: 'internId',
+            message: "What is the intern's id?"
+        },
+        {
+            type: 'input',
+            name: 'internEmail',
+            message: "What is the intern's email address?"
+        },
+        {
+            type: 'input',
+            name: 'internSchool',
+            message: "What is the intern's school?"
+        }
+    ]).then((responses) => {
+        console.log(responses);
+        const intern = new Intern(responses.internName, responses.internId, responses.internEmail, responses.internSchool);
+        teamMembers.push(intern);
+        addTeamMember();
+    })
+};
+
 function addTeamMember() {
     inquirer.prompt([
         {
@@ -90,5 +120,12 @@ function addTeamMember() {
     })
 };
 
+
+function createTeam() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, render(teamMember), "utf-8");
+}
 
 createManager();
